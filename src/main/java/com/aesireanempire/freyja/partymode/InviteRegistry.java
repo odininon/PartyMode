@@ -28,4 +28,9 @@ public class InviteRegistry
         }
         return false;
     }
+
+    public void removePlayerInvite(EntityPlayer sender)
+    {
+        invitations.remove(sender.getDisplayName());
+    }
 }

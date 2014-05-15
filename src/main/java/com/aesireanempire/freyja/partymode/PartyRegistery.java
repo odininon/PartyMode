@@ -18,8 +18,9 @@ public class PartyRegistery
 
     public void removePlayerFromParties(EntityPlayer player)
     {
-        for (Party party : getParties())
+        for (int i = getParties().size() - 1; i > 0; i--)
         {
+            Party party = getParties().get(i);
             if (party.containsMember(player))
             {
                 party.removeMember(player);
@@ -31,8 +32,9 @@ public class PartyRegistery
 
     private void cleanUpEmptyParties()
     {
-        for (Party party : getParties())
+        for (int i = getParties().size() - 1; i > 0; i--)
         {
+            Party party = getParties().get(i);
             if (party.getPartySize() == 0)
             {
                 removeParty(party);

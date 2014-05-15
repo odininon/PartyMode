@@ -37,6 +37,16 @@ public class PartyMode
         return partyRegistry;
     }
 
+    public static void setInviteRegistry(InviteRegistry inviteRegistry)
+    {
+        PartyMode.inviteRegistry = inviteRegistry;
+    }
+
+    public static void setPartyRegistry(PartyRegistery partyRegistry)
+    {
+        PartyMode.partyRegistry = partyRegistry;
+    }
+
     @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent event)
     {
