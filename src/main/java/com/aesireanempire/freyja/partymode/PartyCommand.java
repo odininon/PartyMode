@@ -61,16 +61,16 @@ public class PartyCommand implements ICommand
 
     private void processAcceptCommand(ICommandSender sender)
     {
-        Party party = InviteRegistry.getPlayerInvite((EntityPlayer) sender);
+        Party party = PartyMode.getInviteRegistry().getPlayerInvite((EntityPlayer) sender);
 
-        PartyRegistery.getInstance().movePlayerToParty((EntityPlayer) sender, party);
+        PartyMode.getPartyRegistry().movePlayerToParty((EntityPlayer) sender, party);
     }
 
     private void processInviteCase(ICommandSender sender, String playerName)
     {
-        Party playerParty = PartyRegistery.getInstance().getPlayerParty((EntityPlayer) sender);
+        Party playerParty = PartyMode.getPartyRegistry().getPlayerParty((EntityPlayer) sender);
         EntityPlayer player = sender.getEntityWorld().getPlayerEntityByName(playerName);
-        if (InviteRegistry.addInvite(playerParty, player))
+        if (PartyMode.getInviteRegistry().addInvite(new Invite((EntityPlayer) sender, playerParty, player)))
         {
             ((EntityPlayer) sender).addChatComponentMessage(new ChatComponentText("Invitation sent to " + playerName));
         }
@@ -83,7 +83,7 @@ public class PartyCommand implements ICommand
     private void processListCommand(ICommandSender sender)
     {
         sender.addChatMessage(new ChatComponentText("Party Members: "));
-        for (Party party : PartyRegistery.getInstance().getParties())
+        for (Party party : PartyMode.getPartyRegistry().getParties())
         {
             for (EntityPlayer player : party.getPartyMembers())
             {

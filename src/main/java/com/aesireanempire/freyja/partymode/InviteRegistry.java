@@ -10,30 +10,22 @@ import java.util.HashMap;
  */
 public class InviteRegistry
 {
-    private static InviteRegistry INSTANCE = new InviteRegistry();
-
     private HashMap<String, Party> invitations = new HashMap<String, Party>();
 
-    public static InviteRegistry getInstance()
+    public Party getPlayerInvite(EntityPlayer player)
     {
-        return INSTANCE;
+        return invitations.get(player.getDisplayName());
     }
 
-    public static boolean addInvite(Party party, EntityPlayer player)
+    public boolean addInvite(Invite invite)
     {
-        if (!getInstance().invitations.containsKey(player.getDisplayName()))
+        if (!invitations.containsKey(invite.getInvitee().getDisplayName()))
         {
-            getInstance().invitations.put(player.getDisplayName(), party);
-            player.addChatComponentMessage(new ChatComponentText("You have been invited to " + party.getPartyMembers().get(0).getDisplayName() + "'s party."));
-            player.addChatComponentMessage(new ChatComponentText("To accept type /party accept"));
+            invitations.put(invite.getInvitee().getDisplayName(), invite.getParty());
+            invite.getInvitee().addChatComponentMessage(new ChatComponentText("You have been invited to " + invite.getCreator().getDisplayName() + "'s party."));
+            invite.getInvitee().addChatComponentMessage(new ChatComponentText("To accept type /party accept"));
             return true;
         }
-
         return false;
-    }
-
-    public static Party getPlayerInvite(EntityPlayer player)
-    {
-        return getInstance().invitations.get(player.getDisplayName());
     }
 }

@@ -9,23 +9,11 @@ import java.util.ArrayList;
  */
 public class PartyRegistery
 {
-    private static PartyRegistery Instance = new PartyRegistery();
-
     private ArrayList<Party> parties = new ArrayList<Party>();
-
-    private PartyRegistery()
-    {
-
-    }
-
-    public static PartyRegistery getInstance()
-    {
-        return Instance;
-    }
 
     public void registerParty(Party party)
     {
-        getInstance().parties.add(party);
+        parties.add(party);
     }
 
     public void removePlayerFromParties(EntityPlayer player)
@@ -54,7 +42,7 @@ public class PartyRegistery
 
     private void removeParty(Party party)
     {
-        getInstance().parties.remove(party);
+        parties.remove(party);
     }
 
     public ArrayList<Party> getParties()
@@ -64,7 +52,7 @@ public class PartyRegistery
 
     public Party getPlayerParty(EntityPlayer player)
     {
-        for (Party party : getInstance().parties)
+        for (Party party : parties)
         {
             if (party.containsMember(player))
             {

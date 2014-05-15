@@ -24,6 +24,19 @@ public class PartyMode
     @SidedProxy(clientSide = "com.aesireanempire.freyja.partymode.ClientProxy", serverSide = "com.aesireanempire.freyja.partymode.CommonProxy")
     public static CommonProxy proxy;
 
+    private static InviteRegistry inviteRegistry = new InviteRegistry();
+    private static PartyRegistery partyRegistry = new PartyRegistery();
+
+    public static InviteRegistry getInviteRegistry()
+    {
+        return inviteRegistry;
+    }
+
+    public static PartyRegistery getPartyRegistry()
+    {
+        return partyRegistry;
+    }
+
     @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent event)
     {
