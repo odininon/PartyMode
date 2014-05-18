@@ -3,13 +3,14 @@ package com.aesireanempire.freyja.partymode;
 import net.minecraft.entity.player.EntityPlayer;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by freyja
  */
 public class PartyRegistery
 {
-    private ArrayList<Party> parties = new ArrayList<Party>();
+    private final ArrayList<Party> parties = new ArrayList<Party>();
 
     public void registerParty(Party party)
     {
@@ -47,7 +48,7 @@ public class PartyRegistery
         parties.remove(party);
     }
 
-    public ArrayList<Party> getParties()
+    public List<Party> getParties()
     {
         return parties;
     }

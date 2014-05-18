@@ -9,6 +9,7 @@ import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.verify;
@@ -139,5 +140,26 @@ public class PartyCommandTest
     public void testThrowsExecptionWithNoArugments() throws Exception
     {
         command.processCommand(player, new String[] { });
+    }
+
+    @Test
+    public void testAllowUserToLeaveParty() throws Exception
+    {
+        Party party = new Party(player);
+        party.addMember(player2);
+
+        when(player.getDisplayName()).thenReturn("Bob");
+        when(player2.getDisplayName()).thenReturn("Roger");
+
+        partyRegistry.registerParty(party);
+
+        assertEquals(2, party.getPartySize());
+
+        command.processCommand(player, new String[] { "leave" });
+
+        assertEquals(1, party.getPartySize());
+
+        verify(player).addChatComponentMessage(new ChatComponentText("You have left the party."));
+        verify(player2).addChatComponentMessage(new ChatComponentText("Bob has left your party."));
     }
 }

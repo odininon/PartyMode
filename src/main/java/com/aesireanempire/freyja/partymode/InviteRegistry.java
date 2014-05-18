@@ -4,13 +4,14 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ChatComponentText;
 
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by freyja
  */
 public class InviteRegistry
 {
-    private HashMap<String, Party> invitations = new HashMap<String, Party>();
+    private final Map<String, Party> invitations = new HashMap<String, Party>();
 
     public Party getPlayerInvite(EntityPlayer player)
     {

@@ -8,6 +8,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -56,7 +57,7 @@ public class PartyTest
     public void testGetsMembers()
     {
         Party party = new Party(player);
-        ArrayList<EntityPlayer> partyMembers = party.getPartyMembers();
+        List<EntityPlayer> partyMembers = party.getPartyMembers();
 
         assertTrue(partyMembers.contains(player));
     }
@@ -66,7 +67,7 @@ public class PartyTest
     {
         Party party = new Party(player);
         party.removeMember(player);
-        ArrayList<EntityPlayer> partyMembers = party.getPartyMembers();
+        List<EntityPlayer> partyMembers = party.getPartyMembers();
 
         assertFalse(partyMembers.contains(player));
     }

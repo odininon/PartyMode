@@ -35,13 +35,13 @@ public class PartyCommand implements ICommand
         {
             String command = args[0];
 
-            if (command.equalsIgnoreCase("list"))
+            if ("list".equalsIgnoreCase(command))
             {
                 processListCommand(var1);
                 return;
             }
 
-            if (command.equalsIgnoreCase("invite"))
+            if ("invite".equalsIgnoreCase(command))
             {
                 if (args.length == 2)
                 {
@@ -50,9 +50,15 @@ public class PartyCommand implements ICommand
                 }
             }
 
-            if (command.equalsIgnoreCase("accept"))
+            if ("accept".equalsIgnoreCase(command))
             {
                 processAcceptCommand(var1);
+                return;
+            }
+
+            if ("leave".equalsIgnoreCase(command))
+            {
+                processLeaveCommand(var1);
                 return;
             }
 
@@ -61,6 +67,19 @@ public class PartyCommand implements ICommand
         else
         {
             throw new WrongUsageException(getCommandUsage(var1));
+        }
+    }
+
+    private void processLeaveCommand(ICommandSender sender)
+    {
+        Party playerParty = PartyMode.getPartyRegistry().getPlayerParty((EntityPlayer) sender);
+
+        if (playerParty != null)
+        {
+            playerParty.removeMember((EntityPlayer) sender);
+            ((EntityPlayer) sender).addChatComponentMessage(new ChatComponentText("You have left the party."));
+
+            PartyMode.getPartyRegistry().registerParty(new Party(((EntityPlayer) sender)));
         }
     }
 

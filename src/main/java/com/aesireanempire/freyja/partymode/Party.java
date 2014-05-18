@@ -11,7 +11,7 @@ import java.util.Collections;
  */
 public class Party
 {
-    private ArrayList<EntityPlayer> partMembers = new ArrayList<EntityPlayer>();
+    private final ArrayList<EntityPlayer> partMembers = new ArrayList<EntityPlayer>();
 
     public Party(EntityPlayer... players)
     {
@@ -35,16 +35,24 @@ public class Party
 
     public void addMember(EntityPlayer player)
     {
+        notifyMembers(player, "%s has joined your party.");
+        partMembers.add(player);
+    }
+
+    private void notifyMembers(EntityPlayer player, String message)
+    {
         for (EntityPlayer play : partMembers)
         {
-            play.addChatComponentMessage(new ChatComponentText(player.getDisplayName() + " has joined your party."));
+            if (!play.equals(player))
+            {
+                play.addChatComponentMessage(new ChatComponentText(String.format(message, player.getDisplayName())));
+            }
         }
-
-        partMembers.add(player);
     }
 
     public void removeMember(EntityPlayer player)
     {
         partMembers.remove(player);
+        notifyMembers(player, "%s has left your party.");
     }
 }
