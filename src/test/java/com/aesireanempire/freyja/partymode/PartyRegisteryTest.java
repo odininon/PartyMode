@@ -40,11 +40,14 @@ public class PartyRegisteryTest
     @Test
     public void testRemovePlayerFromParties() throws Exception
     {
-        registery.registerParty(new Party(player));
-        registery.registerParty(new Party(player));
+        Party party1 = new Party(player);
+        registery.registerParty(party1);
+
+        Party party2 = new Party(player2);
+        registery.registerParty(party2);
         registery.removePlayerFromParties(player);
 
-        assertFalse(registery.getParties().contains(party));
+        assertFalse(registery.getParties().contains(party1));
     }
 
     @Test
@@ -71,9 +74,10 @@ public class PartyRegisteryTest
     @Test
     public void testMovePlayerToParty() throws Exception
     {
+        Party party1 = new Party(player);
         Party party2 = new Party(player2);
 
-        registery.registerParty(party);
+        registery.registerParty(party1);
         registery.registerParty(party2);
 
         registery.movePlayerToParty(player, party2);
