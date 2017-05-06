@@ -1,7 +1,7 @@
 package com.aesireanempire.freyja.partymode;
 
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.util.ChatComponentText;
+import net.minecraft.util.text.TextComponentString;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -36,7 +36,7 @@ public class Party {
     private void notifyMembers(EntityPlayer player, String message) {
         for (EntityPlayer play : partMembers) {
             if (!play.equals(player)) {
-                play.addChatComponentMessage(new ChatComponentText(String.format(message, player.getDisplayName())));
+                play.sendMessage(new TextComponentString(String.format(message, player.getDisplayNameString())));
             }
         }
     }

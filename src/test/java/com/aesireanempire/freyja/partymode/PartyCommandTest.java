@@ -2,7 +2,8 @@ package com.aesireanempire.freyja.partymode;
 
 import net.minecraft.command.WrongUsageException;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.util.ChatComponentText;
+import net.minecraft.server.MinecraftServer;
+import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.World;
 import org.junit.Before;
 import org.junit.Test;
@@ -24,6 +25,9 @@ public class PartyCommandTest {
 
     @Mock
     World world;
+
+    @Mock
+    MinecraftServer minecraftServer;
 
     PartyCommand command;
 
@@ -47,12 +51,12 @@ public class PartyCommandTest {
         PartyRegistry partyRegistry = PartyMode.getPartyRegistry();
         partyRegistry.registerParty(new Party(player));
 
-        when(player.getDisplayName()).thenReturn("Bob");
+        when(player.getDisplayNameString()).thenReturn("Bob");
 
-        command.processCommand(player, new String[]{"list"});
+        command.execute(minecraftServer, player, new String[]{"list"});
 
-        verify(player).addChatMessage(new ChatComponentText("Party Members: "));
-        verify(player).addChatMessage(new ChatComponentText("- Bob"));
+        verify(player).sendMessage(new TextComponentString("Party Members: "));
+        verify(player).sendMessage(new TextComponentString("- Bob"));
     }
 
     @Test
@@ -60,16 +64,16 @@ public class PartyCommandTest {
         partyRegistry.registerParty(new Party(player));
         partyRegistry.registerParty(new Party(player2));
 
-        when(player.getDisplayName()).thenReturn("Bob");
-        when(player2.getDisplayName()).thenReturn("Roger");
+        when(player.getDisplayNameString()).thenReturn("Bob");
+        when(player2.getDisplayNameString()).thenReturn("Roger");
 
         when(player.getEntityWorld()).thenReturn(world);
         when(world.getPlayerEntityByName(anyString())).thenReturn(player2);
 
-        command.processCommand(player, new String[]{"invite", "Rodger"});
+        command.execute(minecraftServer, player, new String[]{"invite", "Rodger"});
 
-        verify(player2).addChatComponentMessage(new ChatComponentText("You have been invited to Bob's party."));
-        verify(player).addChatComponentMessage(new ChatComponentText("Invite sent to Rodger."));
+        verify(player2).sendMessage(new TextComponentString("You have been invited to Bob's party."));
+        verify(player).sendMessage(new TextComponentString("Invite sent to Rodger."));
     }
 
     @Test
@@ -78,17 +82,17 @@ public class PartyCommandTest {
         partyRegistry.registerParty(party);
         partyRegistry.registerParty(new Party(player2));
 
-        when(player.getDisplayName()).thenReturn("Bob");
-        when(player2.getDisplayName()).thenReturn("Roger");
+        when(player.getDisplayNameString()).thenReturn("Bob");
+        when(player2.getDisplayNameString()).thenReturn("Roger");
 
         inviteRegistry.addInvite(new Invite(player, party, player2));
 
         when(player.getEntityWorld()).thenReturn(world);
         when(world.getPlayerEntityByName(anyString())).thenReturn(player2);
 
-        command.processCommand(player, new String[]{"invite", "Rodger"});
+        command.execute(minecraftServer, player, new String[]{"invite", "Rodger"});
 
-        verify(player).addChatComponentMessage(new ChatComponentText("Rodger currently has pending invitations."));
+        verify(player).sendMessage(new TextComponentString("Rodger currently has pending invitations."));
     }
 
     @Test
@@ -97,14 +101,14 @@ public class PartyCommandTest {
         partyRegistry.registerParty(party);
         partyRegistry.registerParty(new Party(player2));
 
-        when(player.getDisplayName()).thenReturn("Bob");
-        when(player2.getDisplayName()).thenReturn("Roger");
+        when(player.getDisplayNameString()).thenReturn("Bob");
+        when(player2.getDisplayNameString()).thenReturn("Roger");
 
         inviteRegistry.addInvite(new Invite(player, party, player2));
 
-        command.processCommand(player2, new String[]{"accept"});
+        command.execute(minecraftServer, player2, new String[]{"accept"});
 
-        verify(player).addChatComponentMessage(new ChatComponentText("Roger has joined your party."));
+        verify(player).sendMessage(new TextComponentString("Roger has joined your party."));
 
         assertNull(inviteRegistry.getPlayerInvite(player2));
     }
@@ -115,22 +119,22 @@ public class PartyCommandTest {
         partyRegistry.registerParty(party);
         partyRegistry.registerParty(new Party(player2));
 
-        when(player.getDisplayName()).thenReturn("Bob");
-        when(player2.getDisplayName()).thenReturn("Roger");
+        when(player.getDisplayNameString()).thenReturn("Bob");
+        when(player2.getDisplayNameString()).thenReturn("Roger");
 
-        command.processCommand(player2, new String[]{"accept"});
+        command.execute(minecraftServer, player2, new String[]{"accept"});
 
-        verify(player2).addChatComponentMessage(new ChatComponentText("You have no pending initiations."));
+        verify(player2).sendMessage(new TextComponentString("You have no pending initiations."));
     }
 
     @Test(expected = WrongUsageException.class)
     public void testThrowsExceptionIfFaultyCommand() throws Exception {
-        command.processCommand(player, new String[]{"testgaeehrae"});
+        command.execute(minecraftServer, player, new String[]{"testgaeehrae"});
     }
 
     @Test(expected = WrongUsageException.class)
     public void testThrowsExecptionWithNoArugments() throws Exception {
-        command.processCommand(player, new String[]{});
+        command.execute(minecraftServer, player, new String[]{});
     }
 
     @Test
@@ -138,18 +142,18 @@ public class PartyCommandTest {
         Party party = new Party(player);
         party.addMember(player2);
 
-        when(player.getDisplayName()).thenReturn("Bob");
-        when(player2.getDisplayName()).thenReturn("Roger");
+        when(player.getDisplayNameString()).thenReturn("Bob");
+        when(player2.getDisplayNameString()).thenReturn("Roger");
 
         partyRegistry.registerParty(party);
 
         assertEquals(2, party.getPartySize());
 
-        command.processCommand(player, new String[]{"leave"});
+        command.execute(minecraftServer, player, new String[]{"leave"});
 
         assertEquals(1, party.getPartySize());
 
-        verify(player).addChatComponentMessage(new ChatComponentText("You have left the party."));
-        verify(player2).addChatComponentMessage(new ChatComponentText("Bob has left your party."));
+        verify(player).sendMessage(new TextComponentString("You have left the party."));
+        verify(player2).sendMessage(new TextComponentString("Bob has left your party."));
     }
 }

@@ -6,3 +6,5 @@
 /build
 /eclipse
 /.gradle
+/run
+/out

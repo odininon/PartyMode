@@ -1,7 +1,7 @@
 package com.aesireanempire.freyja.partymode;
 
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.util.ChatComponentText;
+import net.minecraft.util.text.TextComponentString;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
@@ -37,7 +37,7 @@ public class PartyTest {
         Party party = new Party(player);
         party.addMember(player2);
 
-        verify(player).addChatComponentMessage(new ChatComponentText(anyString()));
+        verify(player).sendMessage(new TextComponentString(anyString()));
     }
 
     @Test

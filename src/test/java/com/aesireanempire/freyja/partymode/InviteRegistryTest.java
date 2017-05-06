@@ -1,7 +1,7 @@
 package com.aesireanempire.freyja.partymode;
 
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.util.ChatComponentText;
+import net.minecraft.util.text.TextComponentString;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
@@ -52,12 +52,12 @@ public class InviteRegistryTest {
 
     @Test
     public void testNotifiesPlayerOfBeingInvited() {
-        when(player.getDisplayName()).thenReturn("Awesome");
+        when(player.getDisplayNameString()).thenReturn("Awesome");
 
         registry.addInvite(new Invite(player, party, player2));
 
-        verify(player2).addChatComponentMessage(new ChatComponentText("You have been invited to Awesome's party."));
-        verify(player2).addChatComponentMessage(new ChatComponentText("To accept type /party accept"));
+        verify(player2).sendMessage(new TextComponentString("You have been invited to Awesome's party."));
+        verify(player2).sendMessage(new TextComponentString("To accept type /party accept"));
     }
 
     @Test

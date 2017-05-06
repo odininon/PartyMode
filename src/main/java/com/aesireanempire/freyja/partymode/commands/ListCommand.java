@@ -4,7 +4,7 @@ import com.aesireanempire.freyja.partymode.Party;
 import com.aesireanempire.freyja.partymode.PartyMode;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.util.ChatComponentText;
+import net.minecraft.util.text.TextComponentString;
 
 /**
  * Created by freyja
@@ -12,11 +12,11 @@ import net.minecraft.util.ChatComponentText;
 public class ListCommand implements Command {
     @Override
     public void process(ICommandSender sender, String[] args) {
-        sender.addChatMessage(new ChatComponentText("Party Members: "));
+        sender.sendMessage(new TextComponentString("Party Members: "));
         Party party = PartyMode.getPartyRegistry().getPlayerParty((EntityPlayer) sender);
         {
             for (EntityPlayer player : party.getPartyMembers()) {
-                sender.addChatMessage(new ChatComponentText("- " + player.getDisplayName()));
+                sender.sendMessage(new TextComponentString("- " + player.getDisplayNameString()));
             }
         }
     }

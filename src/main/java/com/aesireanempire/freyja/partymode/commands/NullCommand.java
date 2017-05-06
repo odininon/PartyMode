@@ -8,7 +8,7 @@ import net.minecraft.command.WrongUsageException;
  */
 public class NullCommand implements Command {
     @Override
-    public void process(ICommandSender sender, String[] args) {
+    public void process(ICommandSender sender, String[] args) throws WrongUsageException {
         throw new WrongUsageException("");
     }
 }

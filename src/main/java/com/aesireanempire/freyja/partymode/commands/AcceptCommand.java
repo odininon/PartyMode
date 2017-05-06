@@ -4,7 +4,7 @@ import com.aesireanempire.freyja.partymode.Party;
 import com.aesireanempire.freyja.partymode.PartyMode;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.util.ChatComponentText;
+import net.minecraft.util.text.TextComponentString;
 
 /**
  * Created by freyja
@@ -19,7 +19,7 @@ public class AcceptCommand implements Command {
             PartyMode.getPartyRegistry().movePlayerToParty((EntityPlayer) sender, party);
             PartyMode.getInviteRegistry().removePlayerInvite((EntityPlayer) sender);
         } else {
-            ((EntityPlayer) sender).addChatComponentMessage(new ChatComponentText("You have no pending initiations."));
+            ((EntityPlayer) sender).sendMessage(new TextComponentString("You have no pending initiations."));
         }
     }
 }

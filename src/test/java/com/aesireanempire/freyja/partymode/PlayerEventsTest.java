@@ -1,7 +1,7 @@
 package com.aesireanempire.freyja.partymode;
 
-import cpw.mods.fml.common.gameevent.PlayerEvent;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraftforge.fml.common.gameevent.PlayerEvent;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
@@ -25,7 +25,7 @@ public class PlayerEventsTest {
         partyRegistry = new PartyRegistry();
         playerEvents = new PlayerEvents(partyRegistry);
 
-        when(player.getDisplayName()).thenReturn("Bob");
+        when(player.getDisplayNameString()).thenReturn("Bob");
     }
 
     @Test
