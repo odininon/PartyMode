@@ -6,18 +6,20 @@ import cpw.mods.fml.common.gameevent.PlayerEvent;
 /**
  * Created by freyja
  */
-public class PlayerEvents
-{
+public class PlayerEvents {
+    private final PartyRegistry partyRegistry;
 
-    @SubscribeEvent
-    public void onPlayerJoined(PlayerEvent.PlayerLoggedInEvent event)
-    {
-        PartyMode.getPartyRegistry().registerParty(new Party(event.player));
+    public PlayerEvents(PartyRegistry partyRegistry) {
+        this.partyRegistry = partyRegistry;
     }
 
     @SubscribeEvent
-    public void onPlayerDisconnect(PlayerEvent.PlayerLoggedOutEvent event)
-    {
-        PartyMode.getPartyRegistry().removePlayerFromParties(event.player);
+    public void onPlayerJoined(PlayerEvent.PlayerLoggedInEvent event) {
+        partyRegistry.registerParty(new Party(event.player));
+    }
+
+    @SubscribeEvent
+    public void onPlayerDisconnect(PlayerEvent.PlayerLoggedOutEvent event) {
+        partyRegistry.removePlayerFromParties(event.player);
     }
 }

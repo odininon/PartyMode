@@ -9,19 +9,15 @@ import java.util.Map;
 /**
  * Created by freyja
  */
-public class InviteRegistry
-{
+public class InviteRegistry {
     private final Map<String, Party> invitations = new HashMap<String, Party>();
 
-    public Party getPlayerInvite(EntityPlayer player)
-    {
+    public Party getPlayerInvite(EntityPlayer player) {
         return invitations.get(player.getDisplayName());
     }
 
-    public boolean addInvite(Invite invite)
-    {
-        if (!invitations.containsKey(invite.getInvitee().getDisplayName()))
-        {
+    public boolean addInvite(Invite invite) {
+        if (!invitations.containsKey(invite.getInvitee().getDisplayName())) {
             invitations.put(invite.getInvitee().getDisplayName(), invite.getParty());
             invite.getInvitee().addChatComponentMessage(new ChatComponentText("You have been invited to " + invite.getCreator().getDisplayName() + "'s party."));
             invite.getInvitee().addChatComponentMessage(new ChatComponentText("To accept type /party accept"));
@@ -30,8 +26,7 @@ public class InviteRegistry
         return false;
     }
 
-    public void removePlayerInvite(EntityPlayer sender)
-    {
+    public void removePlayerInvite(EntityPlayer sender) {
         invitations.remove(sender.getDisplayName());
     }
 }

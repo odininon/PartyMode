@@ -7,16 +7,13 @@ import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-import static org.mockito.Mockito.*;
+import static org.junit.Assert.*;
+import static org.mockito.Mockito.anyString;
+import static org.mockito.Mockito.verify;
 
-public class PartyTest
-{
+public class PartyTest {
     @Mock
     EntityPlayer player;
 
@@ -24,22 +21,19 @@ public class PartyTest
     EntityPlayer player2;
 
     @Before
-    public void setUp() throws Exception
-    {
+    public void setUp() throws Exception {
         MockitoAnnotations.initMocks(this);
     }
 
     @Test
-    public void testContainsMember()
-    {
+    public void testContainsMember() {
         Party party = new Party(player);
 
         assertTrue(party.containsMember(player));
     }
 
     @Test
-    public void testAddMember()
-    {
+    public void testAddMember() {
         Party party = new Party(player);
         party.addMember(player2);
 
@@ -47,15 +41,13 @@ public class PartyTest
     }
 
     @Test
-    public void testGetSize()
-    {
+    public void testGetSize() {
         Party party = new Party(player);
         assertEquals(party.getPartySize(), 1);
     }
 
     @Test
-    public void testGetsMembers()
-    {
+    public void testGetsMembers() {
         Party party = new Party(player);
         List<EntityPlayer> partyMembers = party.getPartyMembers();
 
@@ -63,8 +55,7 @@ public class PartyTest
     }
 
     @Test
-    public void testRemovesMember()
-    {
+    public void testRemovesMember() {
         Party party = new Party(player);
         party.removeMember(player);
         List<EntityPlayer> partyMembers = party.getPartyMembers();

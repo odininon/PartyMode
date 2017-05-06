@@ -9,49 +9,39 @@ import java.util.Collections;
 /**
  * Created by freyja
  */
-public class Party
-{
+public class Party {
     private final ArrayList<EntityPlayer> partMembers = new ArrayList<EntityPlayer>();
 
-    public Party(EntityPlayer... players)
-    {
+    public Party(EntityPlayer... players) {
         Collections.addAll(this.partMembers, players);
     }
 
-    public boolean containsMember(EntityPlayer player)
-    {
+    public boolean containsMember(EntityPlayer player) {
         return partMembers.contains(player);
     }
 
-    public int getPartySize()
-    {
+    public int getPartySize() {
         return partMembers.size();
     }
 
-    public ArrayList<EntityPlayer> getPartyMembers()
-    {
+    public ArrayList<EntityPlayer> getPartyMembers() {
         return this.partMembers;
     }
 
-    public void addMember(EntityPlayer player)
-    {
+    public void addMember(EntityPlayer player) {
         notifyMembers(player, "%s has joined your party.");
         partMembers.add(player);
     }
 
-    private void notifyMembers(EntityPlayer player, String message)
-    {
-        for (EntityPlayer play : partMembers)
-        {
-            if (!play.equals(player))
-            {
+    private void notifyMembers(EntityPlayer player, String message) {
+        for (EntityPlayer play : partMembers) {
+            if (!play.equals(player)) {
                 play.addChatComponentMessage(new ChatComponentText(String.format(message, player.getDisplayName())));
             }
         }
     }
 
-    public void removeMember(EntityPlayer player)
-    {
+    public void removeMember(EntityPlayer player) {
         partMembers.remove(player);
         notifyMembers(player, "%s has left your party.");
     }

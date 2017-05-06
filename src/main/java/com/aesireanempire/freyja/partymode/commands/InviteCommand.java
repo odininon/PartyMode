@@ -11,24 +11,19 @@ import net.minecraft.util.ChatComponentText;
 /**
  * Created by freyja
  */
-public class InviteCommand implements Command
-{
-    @Override public void process(ICommandSender sender, String[] args)
-    {
-        if (args.length == 0)
-        {
+public class InviteCommand implements Command {
+    @Override
+    public void process(ICommandSender sender, String[] args) {
+        if (args.length == 0) {
             throw new WrongUsageException("Must include player name");
         }
 
         String playerName = args[0];
         Party playerParty = PartyMode.getPartyRegistry().getPlayerParty((EntityPlayer) sender);
         EntityPlayer player = sender.getEntityWorld().getPlayerEntityByName(playerName);
-        if (PartyMode.getInviteRegistry().addInvite(new Invite((EntityPlayer) sender, playerParty, player)))
-        {
+        if (PartyMode.getInviteRegistry().addInvite(new Invite((EntityPlayer) sender, playerParty, player))) {
             ((EntityPlayer) sender).addChatComponentMessage(new ChatComponentText("Invite sent to " + playerName + "."));
-        }
-        else
-        {
+        } else {
             ((EntityPlayer) sender).addChatComponentMessage(new ChatComponentText(playerName + " currently has pending invitations."));
         }
     }

@@ -9,15 +9,13 @@ import net.minecraft.util.ChatComponentText;
 /**
  * Created by freyja
  */
-public class ListCommand implements Command
-{
-    @Override public void process(ICommandSender sender, String[] args)
-    {
+public class ListCommand implements Command {
+    @Override
+    public void process(ICommandSender sender, String[] args) {
         sender.addChatMessage(new ChatComponentText("Party Members: "));
         Party party = PartyMode.getPartyRegistry().getPlayerParty((EntityPlayer) sender);
         {
-            for (EntityPlayer player : party.getPartyMembers())
-            {
+            for (EntityPlayer player : party.getPartyMembers()) {
                 sender.addChatMessage(new ChatComponentText("- " + player.getDisplayName()));
             }
         }

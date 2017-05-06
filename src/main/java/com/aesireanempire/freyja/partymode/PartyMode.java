@@ -7,14 +7,12 @@ import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.event.FMLServerStartingEvent;
-import net.minecraftforge.common.MinecraftForge;
 
 /**
  * Created by freyja
  */
 @Mod(name = PartyMode.MODNAME, modid = PartyMode.MODID)
-public class PartyMode
-{
+public class PartyMode {
     public static final String MODNAME = "PartyMode";
     public static final String MODID = "PartyMode";
 
@@ -25,53 +23,45 @@ public class PartyMode
     public static CommonProxy proxy;
 
     private static InviteRegistry inviteRegistry = new InviteRegistry();
-    private static PartyRegistery partyRegistry = new PartyRegistery();
+    private static PartyRegistry partyRegistry = new PartyRegistry();
 
-    public static InviteRegistry getInviteRegistry()
-    {
+    public static InviteRegistry getInviteRegistry() {
         return inviteRegistry;
     }
 
-    public static PartyRegistery getPartyRegistry()
-    {
-        return partyRegistry;
-    }
-
-    public static void setInviteRegistry(InviteRegistry inviteRegistry)
-    {
+    public static void setInviteRegistry(InviteRegistry inviteRegistry) {
         PartyMode.inviteRegistry = inviteRegistry;
     }
 
-    public static void setPartyRegistry(PartyRegistery partyRegistry)
-    {
+    public static PartyRegistry getPartyRegistry() {
+        return partyRegistry;
+    }
+
+    public static void setPartyRegistry(PartyRegistry partyRegistry) {
         PartyMode.partyRegistry = partyRegistry;
     }
 
     @Mod.EventHandler
-    public void preInit(FMLPreInitializationEvent event)
-    {
+    public void preInit(FMLPreInitializationEvent event) {
         //TODO LogHandler
         //TODO ConfigHandler
 
-        FMLCommonHandler.instance().bus().register(new PlayerEvents());
+        FMLCommonHandler.instance().bus().register(new PlayerEvents(partyRegistry));
     }
 
     @Mod.EventHandler
-    public void init(FMLInitializationEvent event)
-    {
+    public void init(FMLInitializationEvent event) {
         //TODO GuiHandler
         //TODO TickHandlers
     }
 
     @Mod.EventHandler
-    public void postInit(FMLPostInitializationEvent event)
-    {
+    public void postInit(FMLPostInitializationEvent event) {
 
     }
 
     @Mod.EventHandler
-    public void registerCommands(FMLServerStartingEvent event)
-    {
+    public void registerCommands(FMLServerStartingEvent event) {
         event.registerServerCommand(new PartyCommand());
     }
 }

@@ -6,10 +6,9 @@ import net.minecraft.command.WrongUsageException;
 /**
  * Created by freyja
  */
-public class NullCommand implements Command
-{
-    @Override public void process(ICommandSender sender, String[] args)
-    {
+public class NullCommand implements Command {
+    @Override
+    public void process(ICommandSender sender, String[] args) {
         throw new WrongUsageException("");
     }
 }

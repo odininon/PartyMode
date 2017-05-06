@@ -5,7 +5,6 @@ import net.minecraft.command.ICommandSender;
 /**
  * Created by freyja
  */
-public interface Command
-{
+public interface Command {
     void process(ICommandSender sender, String[] args);
 }

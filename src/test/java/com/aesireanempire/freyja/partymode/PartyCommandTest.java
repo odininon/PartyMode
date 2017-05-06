@@ -15,8 +15,7 @@ import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-public class PartyCommandTest
-{
+public class PartyCommandTest {
     @Mock
     EntityPlayer player;
 
@@ -30,37 +29,34 @@ public class PartyCommandTest
 
     InviteRegistry inviteRegistry;
 
-    PartyRegistery partyRegistry;
+    PartyRegistry partyRegistry;
 
     @Before
-    public void setUp() throws Exception
-    {
+    public void setUp() throws Exception {
         MockitoAnnotations.initMocks(this);
         command = new PartyCommand();
         PartyMode.setInviteRegistry(new InviteRegistry());
         inviteRegistry = PartyMode.getInviteRegistry();
 
-        PartyMode.setPartyRegistry(new PartyRegistery());
+        PartyMode.setPartyRegistry(new PartyRegistry());
         partyRegistry = PartyMode.getPartyRegistry();
     }
 
     @Test
-    public void testListCommand() throws Exception
-    {
-        PartyRegistery partyRegistry = PartyMode.getPartyRegistry();
+    public void testListCommand() throws Exception {
+        PartyRegistry partyRegistry = PartyMode.getPartyRegistry();
         partyRegistry.registerParty(new Party(player));
 
         when(player.getDisplayName()).thenReturn("Bob");
 
-        command.processCommand(player, new String[] { "list" });
+        command.processCommand(player, new String[]{"list"});
 
         verify(player).addChatMessage(new ChatComponentText("Party Members: "));
         verify(player).addChatMessage(new ChatComponentText("- Bob"));
     }
 
     @Test
-    public void testInviteCommandSuccess() throws Exception
-    {
+    public void testInviteCommandSuccess() throws Exception {
         partyRegistry.registerParty(new Party(player));
         partyRegistry.registerParty(new Party(player2));
 
@@ -70,15 +66,14 @@ public class PartyCommandTest
         when(player.getEntityWorld()).thenReturn(world);
         when(world.getPlayerEntityByName(anyString())).thenReturn(player2);
 
-        command.processCommand(player, new String[] { "invite", "Rodger" });
+        command.processCommand(player, new String[]{"invite", "Rodger"});
 
         verify(player2).addChatComponentMessage(new ChatComponentText("You have been invited to Bob's party."));
         verify(player).addChatComponentMessage(new ChatComponentText("Invite sent to Rodger."));
     }
 
     @Test
-    public void testInviteCommandFail() throws Exception
-    {
+    public void testInviteCommandFail() throws Exception {
         Party party = new Party(player);
         partyRegistry.registerParty(party);
         partyRegistry.registerParty(new Party(player2));
@@ -91,14 +86,13 @@ public class PartyCommandTest
         when(player.getEntityWorld()).thenReturn(world);
         when(world.getPlayerEntityByName(anyString())).thenReturn(player2);
 
-        command.processCommand(player, new String[] { "invite", "Rodger" });
+        command.processCommand(player, new String[]{"invite", "Rodger"});
 
         verify(player).addChatComponentMessage(new ChatComponentText("Rodger currently has pending invitations."));
     }
 
     @Test
-    public void testAcceptCommandWithInvitations() throws Exception
-    {
+    public void testAcceptCommandWithInvitations() throws Exception {
         Party party = new Party(player);
         partyRegistry.registerParty(party);
         partyRegistry.registerParty(new Party(player2));
@@ -108,7 +102,7 @@ public class PartyCommandTest
 
         inviteRegistry.addInvite(new Invite(player, party, player2));
 
-        command.processCommand(player2, new String[] { "accept" });
+        command.processCommand(player2, new String[]{"accept"});
 
         verify(player).addChatComponentMessage(new ChatComponentText("Roger has joined your party."));
 
@@ -116,8 +110,7 @@ public class PartyCommandTest
     }
 
     @Test
-    public void testAcceptCommandWithNoInvitations() throws Exception
-    {
+    public void testAcceptCommandWithNoInvitations() throws Exception {
         Party party = new Party(player);
         partyRegistry.registerParty(party);
         partyRegistry.registerParty(new Party(player2));
@@ -125,26 +118,23 @@ public class PartyCommandTest
         when(player.getDisplayName()).thenReturn("Bob");
         when(player2.getDisplayName()).thenReturn("Roger");
 
-        command.processCommand(player2, new String[] { "accept" });
+        command.processCommand(player2, new String[]{"accept"});
 
         verify(player2).addChatComponentMessage(new ChatComponentText("You have no pending initiations."));
     }
 
     @Test(expected = WrongUsageException.class)
-    public void testThrowsExceptionIfFaultyCommand() throws Exception
-    {
-        command.processCommand(player, new String[] { "testgaeehrae" });
+    public void testThrowsExceptionIfFaultyCommand() throws Exception {
+        command.processCommand(player, new String[]{"testgaeehrae"});
     }
 
     @Test(expected = WrongUsageException.class)
-    public void testThrowsExecptionWithNoArugments() throws Exception
-    {
-        command.processCommand(player, new String[] { });
+    public void testThrowsExecptionWithNoArugments() throws Exception {
+        command.processCommand(player, new String[]{});
     }
 
     @Test
-    public void testAllowUserToLeaveParty() throws Exception
-    {
+    public void testAllowUserToLeaveParty() throws Exception {
         Party party = new Party(player);
         party.addMember(player2);
 
@@ -155,7 +145,7 @@ public class PartyCommandTest
 
         assertEquals(2, party.getPartySize());
 
-        command.processCommand(player, new String[] { "leave" });
+        command.processCommand(player, new String[]{"leave"});
 
         assertEquals(1, party.getPartySize());
 

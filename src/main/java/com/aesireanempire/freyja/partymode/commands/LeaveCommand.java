@@ -9,14 +9,12 @@ import net.minecraft.util.ChatComponentText;
 /**
  * Created by freyja
  */
-public class LeaveCommand implements Command
-{
-    @Override public void process(ICommandSender sender, String[] args)
-    {
+public class LeaveCommand implements Command {
+    @Override
+    public void process(ICommandSender sender, String[] args) {
         Party playerParty = PartyMode.getPartyRegistry().getPlayerParty((EntityPlayer) sender);
 
-        if (playerParty != null)
-        {
+        if (playerParty != null) {
             playerParty.removeMember((EntityPlayer) sender);
             ((EntityPlayer) sender).addChatComponentMessage(new ChatComponentText("You have left the party."));
 

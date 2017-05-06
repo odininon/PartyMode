@@ -9,20 +9,16 @@ import net.minecraft.util.ChatComponentText;
 /**
  * Created by freyja
  */
-public class AcceptCommand implements Command
-{
-    @Override public void process(ICommandSender sender, String[] args)
-    {
+public class AcceptCommand implements Command {
+    @Override
+    public void process(ICommandSender sender, String[] args) {
         Party party = PartyMode.getInviteRegistry().getPlayerInvite((EntityPlayer) sender);
 
-        if (party != null)
-        {
+        if (party != null) {
 
             PartyMode.getPartyRegistry().movePlayerToParty((EntityPlayer) sender, party);
             PartyMode.getInviteRegistry().removePlayerInvite((EntityPlayer) sender);
-        }
-        else
-        {
+        } else {
             ((EntityPlayer) sender).addChatComponentMessage(new ChatComponentText("You have no pending initiations."));
         }
     }

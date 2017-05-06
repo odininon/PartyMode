@@ -6,13 +6,12 @@ import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 /**
  * Created by freyja
  */
-public class InviteTest
-{
+public class InviteTest {
     @Mock
     EntityPlayer player;
 
@@ -23,28 +22,24 @@ public class InviteTest
     Party party;
 
     @Before
-    public void setUp() throws Exception
-    {
+    public void setUp() throws Exception {
         MockitoAnnotations.initMocks(this);
     }
 
     @Test
-    public void testInviteHasCreator()
-    {
+    public void testInviteHasCreator() {
         Invite invite = new Invite(player, party, player2);
         assertEquals(invite.getCreator(), player);
     }
 
     @Test
-    public void testInviteHasParty()
-    {
+    public void testInviteHasParty() {
         Invite invite = new Invite(player, party, player2);
         assertEquals(invite.getParty(), party);
     }
 
     @Test
-    public void testInviteHasInvitee()
-    {
+    public void testInviteHasInvitee() {
         Invite invite = new Invite(player, party, player2);
         assertEquals(invite.getInvitee(), player2);
     }

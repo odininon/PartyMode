@@ -8,10 +8,10 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import static org.junit.Assert.*;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
-public class InviteRegistryTest
-{
+public class InviteRegistryTest {
     @Mock
     EntityPlayer player;
 
@@ -24,21 +24,18 @@ public class InviteRegistryTest
     InviteRegistry registry;
 
     @Before
-    public void setUp() throws Exception
-    {
+    public void setUp() throws Exception {
         MockitoAnnotations.initMocks(this);
         registry = new InviteRegistry();
     }
 
     @Test
-    public void testAddInvite()
-    {
+    public void testAddInvite() {
 
     }
 
     @Test
-    public void testGetPlayerInviteWithNoInvites()
-    {
+    public void testGetPlayerInviteWithNoInvites() {
 
         Party playerInvite = registry.getPlayerInvite(player);
 
@@ -46,8 +43,7 @@ public class InviteRegistryTest
     }
 
     @Test
-    public void testGetPlayerInviteWithInvite()
-    {
+    public void testGetPlayerInviteWithInvite() {
         registry.addInvite(new Invite(player, party, player2));
         Party playerInvite = registry.getPlayerInvite(player);
 
@@ -55,8 +51,7 @@ public class InviteRegistryTest
     }
 
     @Test
-    public void testNotifiesPlayerOfBeingInvited()
-    {
+    public void testNotifiesPlayerOfBeingInvited() {
         when(player.getDisplayName()).thenReturn("Awesome");
 
         registry.addInvite(new Invite(player, party, player2));
@@ -66,16 +61,14 @@ public class InviteRegistryTest
     }
 
     @Test
-    public void testReturnsTrueIfInvited()
-    {
+    public void testReturnsTrueIfInvited() {
         boolean invite = registry.addInvite(new Invite(player, party, player2));
 
         assertTrue(invite);
     }
 
     @Test
-    public void testReturnsFalseIfAlreadyInvited()
-    {
+    public void testReturnsFalseIfAlreadyInvited() {
         registry.addInvite(new Invite(player, party, player2));
 
         boolean invite = registry.addInvite(new Invite(player, party, player2));
